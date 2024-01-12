@@ -9,4 +9,4 @@ Découvrez ici des scripts ETL destinés à transformer les données open data s
 
 # Modelisation: Star Schema
 
-![]()
+![](https://github.com/OumaymaMan/ETL-glue-/blob/main/Ressource_README/Star%20Schema.png?raw=true)
