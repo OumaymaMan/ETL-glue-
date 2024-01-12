@@ -1,5 +1,5 @@
 import sys
-import re  # Ajouter cet import pour les expressions régulières
+import re  
 from awsglue.transforms import *
 from awsglue.utils import getResolvedOptions
 from pyspark.context import SparkContext
@@ -7,7 +7,7 @@ from awsglue.context import GlueContext
 from awsglue.job import Job
 from pyspark.sql.functions import *
 from awsglue.dynamicframe import DynamicFrame
-from functools import reduce  # Importez également reduce si nécessaire
+from functools import reduce  
 
 ## @params: [JOB_NAME]
 args = getResolvedOptions(sys.argv, ['JOB_NAME'])
@@ -37,7 +37,7 @@ def process_data(source_dyf, date_pattern, date_format):
             source_df.withColumn("ID_Date", lit(date_column))
                      .withColumn("id_economique", concat(col("country_code"), lit("_"), lit(year_value)))
                      .withColumn("inflation_value", col(date_column))
-                     .withColumn("id_secteur", lit("G"))  # Ajout de la colonne 'id_secteur'
+                     .withColumn("id_secteur", lit("G")) 
                      .select("ID_Date", "id_secteur", "id_economique", "country_code", "inflation_value")
         )
 

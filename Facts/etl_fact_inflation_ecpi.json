@@ -1,6 +1,6 @@
 {
   "name" : "etl_fact_inflation_ecpi",
-  "description" : "etl_fact_inflation_ecpi",
+  "description" : "",
   "role" : "arn:aws:iam::032193519660:role/Projet_Glue_FullAccess",
   "executionProperty" : {
     "maxConcurrentRuns" : 1

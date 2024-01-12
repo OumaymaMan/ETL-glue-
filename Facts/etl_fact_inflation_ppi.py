@@ -37,7 +37,7 @@ def process_data(source_dyf, date_pattern, date_format):
             source_df.withColumn("ID_Date", lit(date_column))
                      .withColumn("id_economique", concat(col("country_code"), lit("_"), lit(year_value)))
                      .withColumn("inflation_value", col(date_column))
-                     .withColumn("id_secteur", lit("OOC"))  # Ajout de la colonne 'id_secteur'
+                     .withColumn("id_secteur", lit("P"))  
                      .select("ID_Date", "id_secteur", "id_economique", "country_code", "inflation_value")
         )
 
@@ -45,19 +45,19 @@ def process_data(source_dyf, date_pattern, date_format):
     return reduce(DataFrame.union, fact_rows)
 
 # Lire les données annuelles depuis la table hcpi_a via le catalogue de données Glue
-annual_source_dyf = glueContext.create_dynamic_frame.from_catalog(database="data", table_name="ccpi_a")
+annual_source_dyf = glueContext.create_dynamic_frame.from_catalog(database="data", table_name="ppi_a")
 annual_fact_df = process_data(annual_source_dyf, r'a\d{4}$', r'a(\d{4})')
 
 annual_fact_df.show(100)
 
 # Lire les données mensuelles depuis la table hcpi_m via le catalogue de données Glue
-monthly_source_dyf = glueContext.create_dynamic_frame.from_catalog(database="data", table_name="ccpi_m")
+monthly_source_dyf = glueContext.create_dynamic_frame.from_catalog(database="data", table_name="ppi_m")
 monthly_fact_df = process_data(monthly_source_dyf, r'a\d{4}m\d{2}$', r'a(\d{4})m(\d{2})')
 
 monthly_fact_df.show(100)
 
 # Lire les données trimestrielles
-quarterly_source_dyf = glueContext.create_dynamic_frame.from_catalog(database="data", table_name="ccpi_q")
+quarterly_source_dyf = glueContext.create_dynamic_frame.from_catalog(database="data", table_name="ppi_q")
 quarterly_fact_df = process_data(quarterly_source_dyf, r'a\d{4}q\d$', r'a(\d{4})q(\d)')
 
 # Union des données annuelles, mensuelles et trimestrielles
@@ -72,13 +72,13 @@ combined_fact_dyf = DynamicFrame.fromDF(combined_fact_df, glueContext, "combined
 # Afficher les deux premières lignes du DynamicFrame combiné pour le débogage
 combined_fact_dyf.toDF().show(300)
 
-# the Redshift connection 
+# Define the Redshift connection options
 redshift_write_options = {
-    "url": "jdbc:redshift://***TODO****",
+    "url": "jdbc:redshift://**TODO**",
     "dbtable": "fact_inflation",
     "user": "***TODO****",
-    "password": "***TODO*****",
-    "redshiftTmpDir": "s3://***TODO****"
+    "password": "****TODO***",
+    "redshiftTmpDir": "s3://****TODO*****"
 }
 
 # Write the DynamicFrame to Redshift
