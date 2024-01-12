@@ -5,8 +5,8 @@ Découvrez ici des scripts ETL destinés à transformer les données open data s
 
 # Dataflow : de "Word Bank" vers "Redshift"
 
-![](Pasted Graphic.png)
+![](Ressource_README/Pasted Graphic.png)
 
 # DModelisation: Star Schema
 
-![](Pasted Graphic 1.png)
+![](Ressource_README/Pasted Graphic 1.png)
